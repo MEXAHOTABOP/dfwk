@@ -1,0 +1,94 @@
+
+$wgEnotifUserTalk = true; # UPO
+$wgEnotifWatchlist = true; # UPO
+
+$wgGroupPermissions['*']['edit']              = false;
+$wgGroupPermissions['user']['edit']           = true;
+$wgAutopromote['emailconfirmed'] = APCOND_EMAILCONFIRMED;
+$wgImplicitGroups = array( 'emailconfirmed' );
+$wgGroupPermissions['emailconfirmed']['edit'] = true;
+$wgGroupPermissions['sysop']['edit'] = true;
+$wgGroupPermissions['*']['interwiki'] = false; # access to Interwiki
+$wgGroupPermissions['sysop']['interwiki'] = true;
+$wgGroupPermissions['sysop']['userrights']  = true;
+$wgGroupPermissions['bureaucrat']['userrights']  = false;
+$wgGroupPermissions['bureaucrat']['edit'] = true;
+$wgGroupPermissions['bureaucrat']['delete'] = true;
+$wgGroupPermissions['bureaucrat']['bigdelete'] = true;
+$wgGroupPermissions['bureaucrat']['undelete'] = true;
+$wgGroupPermissions['bureaucrat']['rollback'] = true;
+$wgGroupPermissions['bureaucrat']['deletedtext'] = true;
+$wgGroupPermissions['bureaucrat']['deletedhistory'] = true;
+
+$wgShowIPinHeader = false;
+$wgEnableSidebarCache = true;
+$wgEnableParserCache = true;
+$wgCookieExpiration = 2592000;
+
+$wgArticlePath = "/$1";
+$wgUsePathInfo = true;        # Enable use of pretty URLs
+
+$wgDefaultUserOptions['usebetatoolbar'] = 1;
+$wgDefaultUserOptions['usebetatoolbar-cgd'] = 1;
+$wgDefaultUserOptions['wikieditor-preview'] = 1;
+
+#wfLoadExtension('ConfirmEdit/hCaptcha');
+#$wgHCaptchaSiteKey = file_get_contents("/secrets/HCaptchaSiteKey");
+#$wgHCaptchaSecretKey = file_get_contents("/secrets/HCaptchaSecretKey");
+#$wgHCaptchaSendRemoteIP = true;
+
+$wgGroupPermissions['*'            ]['skipcaptcha'] = false;
+$wgGroupPermissions['user'         ]['skipcaptcha'] = true;
+$wgGroupPermissions['autoconfirmed']['skipcaptcha'] = true;
+$wgGroupPermissions['bot'          ]['skipcaptcha'] = true; // registered bots
+$wgGroupPermissions['sysop'        ]['skipcaptcha'] = true;
+
+$wgCaptchaTriggers['createaccount'] = true;  // Special:Userlogin&type=signup
+$wgCaptchaTriggers['badlogin']      = true;  // Special:Userlogin after failure
+
+
+$wgRegexFunctionsPerPage = 100;
+
+$wgDFRawEnableDisk = true;
+#$wgDFRawPath = "$IP/extensions/DFRawFunctions/";
+
+// DF40d (3D) namespaces and aliases
+#$wgExtraNamespaces[NS_40d] = "40d";
+#$wgExtraNamespaces[NS_40d_Talk] = "40d_Talk";
+
+// Dwarf Fortress Wiki (project) namespace aliases
+$wgNamespaceAliases['DF'] = 4;
+$wgNamespaceAliases['DF_TALK'] = 5;
+
+// Current Version aliases, currently DF2010
+$wgNamespaceAliases['v0.31'] = 0;
+$wgNamespaceAliases['v0.31_Talk'] = 1;
+
+$wgNamespaceAliases['40d'] = 0;
+$wgNamespaceAliases['40d_Talk'] = 1;
+
+$wgNamespaceAliases['DF2012'] = 0;
+$wgNamespaceAliases['DF2012_Talk'] = 1;
+
+$wgNamespaceAliases['DF2010'] = 0;
+$wgNamespaceAliases['DF2010_Talk'] = 1;
+
+$wgNamespaceAliases['DF2014'] = 0;
+$wgNamespaceAliases['DF2014_Talk'] = 1;
+
+
+//Enabling Subpages
+$wgNamespacesWithSubpages = array_fill(0, 200, true);
+
+#$wgNamespacesToBeSearchedDefault = array( NS_MAIN => true, NS_DF2010 => true );
+
+#SEO opt
+$wgNoFollowDomainExceptions = array( 'dfst.ru', 'chuck.dfwk.ru', 'forum.dfwk.ru' );
+
+$wgMaxTemplateDepth = 500;
+$wgMaxPPExpandDepth = 40;
+
+$wgDebugToolbar = false;
+$wgShowExceptionDetails = false;
+
+$wgEmailConfirmToEdit = true;
