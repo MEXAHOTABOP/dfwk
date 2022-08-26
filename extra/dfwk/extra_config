@@ -89,6 +89,15 @@ $wgNamespaceAliases['DF2010_Talk'] = 1;
 $wgNamespaceAliases['DF2014'] = 0;
 $wgNamespaceAliases['DF2014_Talk'] = 1;
 
+$wgExtraNamespaces['Masterwork_Talk'] = 3001;
+
+$wgExtraNamespaces['Utility'] = 3002;
+$wgExtraNamespaces['Utility_Talk'] = 3003;
+
+$wgExtraNamespaces['Modification'] = 3004;
+$wgExtraNamespaces['Modification_Talk'] = 3005;
+
+
 
 //Enabling Subpages
 $wgNamespacesWithSubpages = array_fill(0, 200, true);
