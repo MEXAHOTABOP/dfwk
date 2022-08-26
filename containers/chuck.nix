@@ -25,7 +25,8 @@ in {
       enable = true;
       extraModules = [ "proxy_fcgi" "remoteip" ];
       adminAddr = "igoreklim@gmail.com";
-      virtualHosts."chuck.dfwk.w1l.ru" = {
+      virtualHosts."chuck.dfwk.ru" = {
+        serverAliases = ["chuck.dfwk.w1l.ru"];
         documentRoot = siteDir;
         extraConfig = ''
           RemoteIPHeader X-Forwarded-For

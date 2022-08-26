@@ -101,6 +101,7 @@
       virtualHosts."forum.dfwk.w1l.ru" = {
           enableACME = true;
           forceSSL = true;
+          default = true;
 
           locations."= /favicon.ico" = {
             root = "/sites/dfwk.ru/favicon/";

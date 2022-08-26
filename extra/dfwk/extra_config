@@ -56,6 +56,11 @@ $wgDFRawEnableDisk = true;
 #$wgExtraNamespaces[NS_40d] = "40d";
 #$wgExtraNamespaces[NS_40d_Talk] = "40d_Talk";
 
+// Masterwork namespace
+$wgExtraNamespaces[3000] = "Masterwork";
+$wgExtraNamespaces[3001] = "Обсуждение_Masterwork";
+
+
 // Dwarf Fortress Wiki (project) namespace aliases
 $wgNamespaceAliases['DF'] = 4;
 $wgNamespaceAliases['DF_TALK'] = 5;
