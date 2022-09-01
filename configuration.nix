@@ -58,9 +58,9 @@
     postfix = {
       enable = true;
       enableSubmission = true;
-      hostname = "dfwk.w1l.ru";
-      domain = "dfwk.w1l.ru";
-      relayDomains = [ "dfwk.w1l.ru" ];
+      hostname = "dfwk.ru";
+      domain = "dfwk.ru";
+      relayDomains = [ "dfwk.ru" ];
       networks = [ "192.168.250.2/32" "192.168.250.4/32" ];
     };
 
@@ -70,7 +70,7 @@
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
-      virtualHosts."dfwk.w1l.ru" = {
+      virtualHosts."dfwk.ru" = {
         enableACME = true;
         forceSSL = true;
 
@@ -84,7 +84,7 @@
         };
       };
 
-      virtualHosts."chuck.dfwk.w1l.ru" = {
+      virtualHosts."chuck.dfwk.ru" = {
         enableACME = true;
         forceSSL = true;
 
@@ -98,7 +98,7 @@
         };
       };
 
-      virtualHosts."forum.dfwk.w1l.ru" = {
+      virtualHosts."forum.dfwk.ru" = {
           enableACME = true;
           forceSSL = true;
           default = true;

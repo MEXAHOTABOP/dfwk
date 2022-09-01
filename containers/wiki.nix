@@ -10,15 +10,15 @@ in {
       package = pkgs.callPackage ../pkgs/mediawiki { };
       php = wiki-php;
 
-      wgServer = "https://dfwk.w1l.ru";
+      wgServer = "https://dfwk.ru";
       wgMainCacheType = "CACHE_ACCEL";
-      wgPasswordSender = "noreply@dfwk.w1l.ru";
+      wgPasswordSender = "noreply@dfwk.ru";
       uploadsDir = "/images";
       smtp = {
         enable = true;
         host = "192.168.250.1";
         port = 25;
-        idHost = "dfwk.w1l.ru";
+        idHost = "dfwk.ru";
         auth = false;
       };
       extensions = {
@@ -64,7 +64,7 @@ in {
       };
 
       virtualHost = {
-        hostName = "dfwk.w1l.ru";
+        hostName = "dfwk.ru";
         adminAddr = "igoreklim@gmail.com";
       };
 
