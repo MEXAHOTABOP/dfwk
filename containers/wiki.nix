@@ -43,6 +43,10 @@ in {
           url = "https://extdist.wmflabs.org/dist/extensions/Variables-REL1_35-23bb2de.tar.gz";
           sha256 = "sha256-/sAuDLi2KfzCslLaD3W517e1Py7tR6BT6EQpd9y/A8w=";
         };
+        UploadWizard = pkgs.fetchzip {
+          url = "https://extdist.wmflabs.org/dist/extensions/UploadWizard-REL1_35-5d498dc.tar.gz";
+          sha256 = "0sd3222q1z12z3qs4im11bqmx8gwn7z3zd5sqm1ml708w48n8yy4";
+        };
         DFRawFunctions = pkgs.fetchgit { # fetchFromGitHub give unexpected results that cause using of cached revision regardless sha256 and rev, im waste a lot of time to debug it
           url = "https://github.com/MEXAHOTABOP/DFRawFunctions.git";
           rev = "aa22c71a2210645f53717559ffd949b8f876d876";
