@@ -71,6 +71,7 @@
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       virtualHosts."dfwk.ru" = {
+        serverAliases = [ "www.dfwk.ru" ];
         enableACME = true;
         forceSSL = true;
 
