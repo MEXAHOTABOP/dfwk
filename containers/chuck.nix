@@ -8,7 +8,7 @@ in {
   services = {
     phpfpm.pools.chuck = {
       inherit user group;
-      phpPackage = pkgs.php56;
+      phpPackage = pkgs.php56.withExtensions ({ enabled, all }: enabled ++ [ all.mysql ]);
       settings =  {
         "listen.owner" = config.services.httpd.user;
         "listen.group" = config.services.httpd.group;
