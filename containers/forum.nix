@@ -8,7 +8,7 @@ in {
   services = {
     phpfpm.pools.forum = {
       inherit user group;
-      phpPackage = pkgs.php74.withExtensions ({ enabled, all }: enabled ++ [ all.apcu ]);
+      phpPackage = pkgs.php56.withExtensions ({ enabled, all }: enabled ++ [ all.apcu ]);
       settings =  {
         "listen.owner" = config.services.httpd.user;
         "listen.group" = config.services.httpd.group;
