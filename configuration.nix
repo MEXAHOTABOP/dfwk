@@ -66,6 +66,7 @@
 
     nginx = {
       enable = true;
+      package = pkgs.openresty;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
