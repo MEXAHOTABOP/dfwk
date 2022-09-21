@@ -43,9 +43,9 @@ in {
           url = "https://extdist.wmflabs.org/dist/extensions/Variables-REL1_35-23bb2de.tar.gz";
           sha256 = "sha256-/sAuDLi2KfzCslLaD3W517e1Py7tR6BT6EQpd9y/A8w=";
         };
-        UploadWizard = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:UploadWizard
-          url = "https://extdist.wmflabs.org/dist/extensions/UploadWizard-REL1_35-5d498dc.tar.gz";
-          sha256 = "0sd3222q1z12z3qs4im11bqmx8gwn7z3zd5sqm1ml708w48n8yy4";
+        SimpleBatchUpload = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
+          url = "https://github.com/ProfessionalWiki/SimpleBatchUpload/archive/refs/tags/1.8.2.tar.gz";
+          sha256 = "04xpwkwmibcdzaz0hvq08hp7q19h0yxaamkqk00q6bs741g67jkn";
         };
         DFRawFunctions = pkgs.fetchgit { # fetchFromGitHub give unexpected results that cause using of cached revision regardless sha256 and rev, im waste a lot of time to debug it
           url = "https://github.com/MEXAHOTABOP/DFRawFunctions.git";
