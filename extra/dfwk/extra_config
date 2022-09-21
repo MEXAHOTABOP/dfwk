@@ -113,3 +113,8 @@ $wgDebugToolbar = false;
 $wgShowExceptionDetails = false;
 
 $wgEmailConfirmToEdit = true;
+
+$wgSimpleBatchUploadMaxFilesPerBatch = [
+	'*' => 0,
+	'bureaucrat' => 1000,
+];
