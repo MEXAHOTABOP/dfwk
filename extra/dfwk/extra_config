@@ -50,6 +50,7 @@ $wgCaptchaTriggers['badlogin']      = true;  // Special:Userlogin after failure
 $wgRegexFunctionsPerPage = 100;
 
 $wgDFRawEnableDisk = true;
+$wgDFRawVersion = "DF2014";
 #$wgDFRawPath = "$IP/extensions/DFRawFunctions/";
 
 // DF40d (3D) namespaces and aliases
