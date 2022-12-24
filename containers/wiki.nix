@@ -12,6 +12,7 @@ in {
 
       wgServer = "https://dfwk.ru";
       wgMainCacheType = "CACHE_ACCEL";
+      wgSessionCacheType = "CACHE_DB";
       wgPasswordSender = "noreply@dfwk.ru";
       uploadsDir = "/images";
       smtp = {
@@ -49,8 +50,8 @@ in {
         };
         DFRawFunctions = pkgs.fetchgit { # fetchFromGitHub give unexpected results that cause using of cached revision regardless sha256 and rev, im waste a lot of time to debug it
           url = "https://github.com/MEXAHOTABOP/DFRawFunctions.git";
-          rev = "968b5f5803e4aa68ea5d5523360fb93fe9d46f46";
-          sha256 = "sha256-O6hZADA2DJEYpOLmZk4CDl74jI9Vj959FWf4IY6UMHM=";
+          rev = "a5d344f0859ee72fe662f474d7a135f869555b29";
+          sha256 = "sha256-8otCvGQjKmDc74GlOVL5DJzPLQddWe1GJLw7WXdwP4k=";
         };
         DFDiagram = pkgs.fetchgit {
           url = "https://github.com/MEXAHOTABOP/DFDiagram.git";

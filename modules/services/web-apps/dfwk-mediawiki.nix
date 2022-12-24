@@ -123,6 +123,7 @@ let
 
       ## Shared memory settings
       $wgMainCacheType = ${cfg.wgMainCacheType};
+      $wgSessionCacheType = ${cfg.wgSessionCacheType};
       $wgMemCachedServers = [];
 
       ${optionalString (cfg.uploadsDir != null) ''
@@ -229,6 +230,13 @@ in
         default = "CACHE_NONE";
         example = "CACHE_ACCEL";
         description = "wgMainCacheType used on wiki.";
+      };
+
+      wgSessionCacheType = mkOption {
+        type = types.str;
+        default = "CACHE_ANYTHING";
+        example = "CACHE_DB";
+        description = "wgSessionCacheType used on wiki must be persistant storage.";
       };
 
       wgPasswordSender = mkOption {
