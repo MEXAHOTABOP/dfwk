@@ -50,8 +50,8 @@ in {
         };
         DFRawFunctions = pkgs.fetchgit { # fetchFromGitHub give unexpected results that cause using of cached revision regardless sha256 and rev, im waste a lot of time to debug it
           url = "https://github.com/MEXAHOTABOP/DFRawFunctions.git";
-          rev = "a5d344f0859ee72fe662f474d7a135f869555b29";
-          sha256 = "sha256-8otCvGQjKmDc74GlOVL5DJzPLQddWe1GJLw7WXdwP4k=";
+          rev = "bf3d8a95eee5cd563deb25567225c91a6687fedb";
+          sha256 = "sha256-PkD+0FO1NcYHXCfrgC876b72LlVeZfh3g+Q0lEje9bE=";
         };
         DFDiagram = pkgs.fetchgit {
           url = "https://github.com/MEXAHOTABOP/DFDiagram.git";
