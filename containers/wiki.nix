@@ -59,6 +59,10 @@ in {
           sha256 = "sha256-zaRE5ObAf0ZmS3J/cIY9x+jvXyhGKf1rj+9uOEyu928=";
           fetchSubmodules = true;
         };
+        Nuke = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:Nuke
+          url = "https://extdist.wmflabs.org/dist/extensions/Nuke-REL1_35-4cde476.tar.gz";
+          sha256 = "01rx95if9q4yz2ana3fx1npwayrxb3n05579qqj44lvvwhy5304c";
+        };
       };
 
       database = {
