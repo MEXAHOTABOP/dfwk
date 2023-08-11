@@ -33,16 +33,16 @@ in {
         #FancyBoxThumbs = null; # deprecated replaced with MultimediaViewer
 
         CharInsert = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:CharInsert
-          url = "https://extdist.wmflabs.org/dist/extensions/CharInsert-REL1_35-89fa92f.tar.gz";
-          sha256 = "sha256-KCCxyfpPyedoHpbO+0MwF84TnOkQSCvdVTWx8xnukfU=";
+          url = "https://extdist.wmflabs.org/dist/extensions/CharInsert-REL1_35-ecd784d.tar.gz";
+          sha256 = "1xjhvkd9rkz0n8gcl6rlfi47d9121h3m0zx2x0y3vzw63mgqisx4";
         };
         RegexFunctions = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:RegexFunctions
-          url = "https://extdist.wmflabs.org/dist/extensions/RegexFunctions-REL1_35-fec4886.tar.gz";
-          sha256 = "sha256-VsyC3BwJqMVtXI41d9U7HU14k8P8mt11P2eU14m1ZC4=";
+          url = "https://extdist.wmflabs.org/dist/extensions/RegexFunctions-REL1_35-9655e21.tar.gz";
+          sha256 = "0ymxc5r8pl3bm7zkav3d1y1c1zvjh0san141i2ba6p8gc3w769s5";
         };
         Variables = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:Variables
-          url = "https://extdist.wmflabs.org/dist/extensions/Variables-REL1_35-23bb2de.tar.gz";
-          sha256 = "sha256-/sAuDLi2KfzCslLaD3W517e1Py7tR6BT6EQpd9y/A8w=";
+          url = "https://extdist.wmflabs.org/dist/extensions/Variables-REL1_35-8356f40.tar.gz";
+          sha256 = "1h0i96d992ik0488c0a5qx0hm4xr7sjh4hgfbxajjv5l4j2b6740";
         };
         SimpleBatchUpload = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
           url = "https://github.com/ProfessionalWiki/SimpleBatchUpload/archive/refs/tags/1.8.2.tar.gz";
@@ -50,8 +50,8 @@ in {
         };
         DFRawFunctions = pkgs.fetchgit { # fetchFromGitHub give unexpected results that cause using of cached revision regardless sha256 and rev, im waste a lot of time to debug it
           url = "https://github.com/MEXAHOTABOP/DFRawFunctions.git";
-          rev = "cba6af058c0a4440202e2ca0b48fed0015d014bc";
-          sha256 = "sha256-tnvTQLmhvQWqAKW/Q3lj5j0r90xDwZUB/S+M5BhuCNU=";
+          rev = "66de81a954f19695a8d679980fa8d5822e78944d";
+          sha256 = "sha256-dFZy5ekuzw9Pw7N0olkxxjBfYcV9RDmgqo0q7/KFG+o=";
         };
         DFDiagram = pkgs.fetchgit {
           url = "https://github.com/MEXAHOTABOP/DFDiagram.git";
@@ -60,8 +60,8 @@ in {
           fetchSubmodules = true;
         };
         Nuke = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:Nuke
-          url = "https://extdist.wmflabs.org/dist/extensions/Nuke-REL1_35-4cde476.tar.gz";
-          sha256 = "01rx95if9q4yz2ana3fx1npwayrxb3n05579qqj44lvvwhy5304c";
+          url = "https://extdist.wmflabs.org/dist/extensions/Nuke-REL1_35-4464513.tar.gz";
+          sha256 = "02si4b8qnk6vl32bzhcg6vlnlk9sqgap2npj3v4qfh3j27vqvjyh";
         };
       };
 
