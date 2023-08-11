@@ -44,7 +44,9 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "no";
+      settings = {
+        PermitRootLogin = "no";
+      };
       ports = [ 3122 ];
     };
 
@@ -169,10 +171,12 @@
     extraOptions = "experimental-features = nix-command flakes";
     gc.automatic = true;
     gc.options = "--delete-older-than 14d";
-    trustedUsers = [
-      "root"
-      "deploy"
-     ];
+    settings = {
+      trusted-users = [
+        "root"
+        "deploy"
+      ];
+    };
   };
 
   environment.systemPackages = with pkgs; [ vim tmux ];

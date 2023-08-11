@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   pname = "mediawiki";
-  version = "1.35.6"; # update no more then on 2 lts releases at time https://www.mediawiki.org/wiki/Manual:Upgrading https://www.mediawiki.org/wiki/Release_notes
+  version = "1.39.4"; # update no more then on 2 lts releases at time https://www.mediawiki.org/wiki/Manual:Upgrading https://www.mediawiki.org/wiki/Release_notes
 
   src = with lib; fetchurl {
     url = "https://releases.wikimedia.org/mediawiki/${versions.majorMinor version}/${pname}-${version}.tar.gz";
-    sha256 = "1i4ic7fccxis0ya0xrchk9w0522vgz1nmgmhfzbzpv4gb5r4i12w";
+    sha256 = "1xg34d8jvv2qm047zxkbl0lvjn96a73bg48iy23qshq0i73bg5cx";
   };
 
   prePatch = ''
