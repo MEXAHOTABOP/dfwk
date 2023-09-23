@@ -3,13 +3,19 @@
     nixpkgs.url = "nixpkgs/nixos-22.05";
     deploy-rs.url = "github:serokell/deploy-rs";
     legacy-php.url = "github:fossar/nix-phps";
+    new-restic.url = "nixpkgs/nixos-23.05";
   };
-  outputs = { self, nixpkgs, legacy-php, deploy-rs }:
+  outputs = { self, nixpkgs, legacy-php, deploy-rs, new-restic }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      overlays = [ legacy-php.overlays.default ];
+      overlays = [ 
+        legacy-php.overlays.default
+        (final: prev:{
+          restic = new-restic.legacyPackages.${system}.restic;
+        })
+      ];
     };
   in {
     dfwkSystem = nixpkgs.lib.nixosSystem {
