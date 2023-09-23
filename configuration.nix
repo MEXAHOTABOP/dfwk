@@ -175,7 +175,11 @@
      ];
   };
 
-  environment.systemPackages = with pkgs; [ vim tmux ];
+  environment.systemPackages = with pkgs; [ 
+    vim
+    tmux
+    restic
+  ];
 
    system.stateVersion = "22.05";
 }
