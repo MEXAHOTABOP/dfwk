@@ -3,8 +3,9 @@
     nixpkgs.url = "nixpkgs/nixos-24.05";
     deploy-rs.url = "github:serokell/deploy-rs";
     legacy-php.url = "github:fossar/nix-phps";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
   };
-  outputs = { self, nixpkgs, legacy-php, deploy-rs}:
+  outputs = { self, nixpkgs, legacy-php, deploy-rs, nixpkgs-unstable}:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -12,6 +13,7 @@
       overlays = [ 
         legacy-php.overlays.default
         (final: prev:{
+          crowdsec = nixpkgs-unstable.legacyPackages.${system}.crowdsec;
         })
       ];
     };
