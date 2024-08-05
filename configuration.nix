@@ -1,5 +1,6 @@
-{ system, config, pkgs, ... }:
+{ system, config, pkgs, lib, ... }:
 {
+  imports = [ ./modules/services/security/crowdsec.nix ];
   boot = {
     isContainer = true;
     loader.initScript.enable = true;
@@ -71,6 +72,9 @@
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
+      commonHttpConfig = ''
+
+      '';
       virtualHosts."dfwk.ru" = {
         serverAliases = [ "www.dfwk.ru" ];
         enableACME = true;
@@ -120,6 +124,12 @@
       enable = true;
       databases = [ "dfwk" "chuck" "forum" ];
       location = "/sites/mysql_backup";
+    };
+
+    crowdsec = {
+      enable = true;
+      name = "dfwk.ru";
+      enrollKeyFile = "/sites/crowdsec_secret";
     };
   };
 
