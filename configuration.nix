@@ -130,6 +130,18 @@
       enable = true;
       name = "dfwk.ru";
       enrollKeyFile = "/sites/crowdsec_secret";
+      package = pkgs.crowdsec.overrideAttrs (finalAttrs: previousAttrs: {
+            ldflags = [
+            "-s"
+            "-w"
+            "-X github.com/crowdsecurity/go-cs-lib/version.Version=v${previousAttrs.version}"
+            "-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=1970-01-01_00:00:00"
+            "-X github.com/crowdsecurity/go-cs-lib/version.Tag=${previousAttrs.version}"
+            "-X github.com/crowdsecurity/crowdsec/pkg/cwversion.Codename=alphaga"
+            "-X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultConfigDir=/etc/crowdsec"
+            "-X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultDataDir=/var/lib/crowdsec/data"
+          ];
+      });
     };
   };
 

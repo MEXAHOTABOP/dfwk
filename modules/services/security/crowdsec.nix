@@ -38,6 +38,7 @@
     };
     crowdsec_service = {
       enable = mkDefault true;
+      acquisition_dir = "${stateDir}/acquis.d";
     };
     api = {
       client = {
@@ -108,14 +109,6 @@ in {
       '';
       type = format.type;
       default = {};
-    };
-    allowLocalJournalAccess = mkOption {
-      description = mkDoc ''
-        Allow acquisitions from local systemd-journald.
-        For details, see <https://doc.crowdsec.net/docs/data_sources/journald>.
-      '';
-      type = types.bool;
-      default = false;
     };
   };
   config = let
@@ -196,7 +189,6 @@ in {
             ProtectControlGroups = mkDefault true;
 
             ProtectProc = mkDefault "invisible";
-            ProcSubset = mkIf (!cfg.allowLocalJournalAccess) (mkDefault "pid");
 
             RestrictNamespaces = mkDefault true;
             RestrictRealtime = mkDefault true;
@@ -250,7 +242,7 @@ in {
         description = lib.mkDefault "Crowdsec service user";
         isSystemUser = lib.mkDefault true;
         group = lib.mkDefault group;
-        extraGroups = lib.mkIf cfg.allowLocalJournalAccess ["systemd-journal"];
+        extraGroups = ["nginx" "systemd-journal"];
       };
 
       users.groups.${group} = lib.mapAttrs (name: lib.mkDefault) {};
