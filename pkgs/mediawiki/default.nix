@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   RewriteEngine On
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.+)$ /index.php?title=$1 [PT,L,QSA]
+  RewriteRule ^(.+)$ /index.php?title=$1 [PT,L,QSA,B]
   RewriteRule ^$ index.php?title=Заглавная_страница [PT,L,QSA]
   '';
 
