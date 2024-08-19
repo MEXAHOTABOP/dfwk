@@ -14,6 +14,14 @@
         legacy-php.overlays.default
         (final: prev:{
           crowdsec = nixpkgs-unstable.legacyPackages.${system}.crowdsec;
+          cs-openresty-bouncer = prev.callPackage ./pkgs/cs-openresty-bouncer { };
+          openresty = prev.openresty.overrideAttrs (finalAttrs: previousAttrs: {
+            postInstall = previousAttrs.postInstall + ''
+              cp -r ${final.luaPackages.lua-resty-http}/share/lua/5.2/* $out/lualib/
+              cp -r ${final.luaPackages.lua-resty-openssl}/share/lua/5.2/* $out/lualib/
+              cp -r ${final.cs-openresty-bouncer}/lua/lib/* $out/lualib/
+            '';
+          });
         })
       ];
     };

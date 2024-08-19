@@ -67,13 +67,15 @@
 
     nginx = {
       enable = true;
+      logError = "stderr error";
       package = pkgs.openresty;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       commonHttpConfig = ''
-
+        resolver local=on ipv6=off;
+        include ${pkgs.cs-openresty-bouncer}/openresty/crowdsec_openresty.conf;
       '';
       virtualHosts."dfwk.ru" = {
         serverAliases = [ "www.dfwk.ru" ];
