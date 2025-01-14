@@ -28,6 +28,7 @@ in {
         Cite = null;
         ConfirmEdit = null;
         WikiEditor = null;
+        CodeEditor = null;
         MultimediaViewer = null;
         #HTMLets = null; # deprecated
         #FancyBoxThumbs = null; # deprecated replaced with MultimediaViewer
