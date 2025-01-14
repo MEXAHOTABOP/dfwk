@@ -148,7 +148,7 @@
   };
 
   containers.wiki = {
-    config = ./containers/wiki.nix;
+    config = import ./containers/wiki.nix { inherit system lib pkgs config; };  # pkgs is overrided inside container function so php overlay arent passed to pkgs, so evalute module before passing in config
     autoStart = true;
     ephemeral = true;
     bindMounts = {
@@ -163,7 +163,7 @@
   };
 
   containers.chuck = {
-    config = import ./containers/chuck.nix { inherit system pkgs config; };  # pkgs is overrided inside container function so overlay with php56 arent passed to pkgs, so evalute module before passing in config
+    config = import ./containers/chuck.nix { inherit system pkgs config; }; 
     autoStart = true;
     ephemeral = true;
     bindMounts = {
@@ -176,7 +176,7 @@
   };
 
   containers.forum = {
-    config = import ./containers/forum.nix { inherit system pkgs config; };  # pkgs is overrided inside container function so overlay with php56 arent passed to pkgs, so evalute module before passing in config
+    config = import ./containers/forum.nix { inherit system pkgs config; };
     autoStart = true;
     ephemeral = true;
     bindMounts = {
@@ -189,7 +189,6 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
     gc.automatic = true;
     gc.options = "--delete-older-than 14d";

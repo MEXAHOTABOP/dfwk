@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
     deploy-rs.url = "github:serokell/deploy-rs";
     legacy-php.url = "github:fossar/nix-phps";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
