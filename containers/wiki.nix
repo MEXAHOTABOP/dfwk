@@ -1,6 +1,6 @@
 { system, lib, pkgs, ... }:
 let
-  wiki-php = pkgs.php74; # https://www.mediawiki.org/wiki/Compatibility
+  wiki-php = pkgs.php83; # https://www.mediawiki.org/wiki/Compatibility
 in {
   imports = [ ../modules/services/web-apps/dfwk-mediawiki.nix ];
   networking.firewall.allowedTCPPorts = [ 80 ];
@@ -52,8 +52,8 @@ in {
         };
         DFRawFunctions = pkgs.fetchgit { # fetchFromGitHub give unexpected results that cause using of cached revision regardless sha256 and rev, im waste a lot of time to debug it
           url = "https://github.com/MEXAHOTABOP/DFRawFunctions.git";
-          rev = "1f9362afb245097c42070d98f35d03b29dc6fac5";
-          sha256 = "sha256-/ae4aoSEQk2XkYDLFud5QqOgcEcJRLciAdUMnqPvoGI=";
+          rev = "456959f9e72c09faf2a9e2db37e91adac0ff179a";
+          sha256 = "sha256-BjMNES07j25yLq/seqafmeDBL3WX27bGFRntjh4GL6w=";
         };
         DFDiagram = pkgs.fetchgit {
           url = "https://github.com/MEXAHOTABOP/DFDiagram.git";
