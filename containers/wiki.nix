@@ -1,6 +1,6 @@
 { system, lib, pkgs, ... }:
 let
-  wiki-php = pkgs.php81; # https://www.mediawiki.org/wiki/Compatibility
+  wiki-php = pkgs.php74; # https://www.mediawiki.org/wiki/Compatibility
 in {
   imports = [ ../modules/services/web-apps/dfwk-mediawiki.nix ];
   networking.firewall.allowedTCPPorts = [ 80 ];
