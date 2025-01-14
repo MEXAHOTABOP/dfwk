@@ -30,6 +30,7 @@ in {
         WikiEditor = null;
         CodeEditor = null;
         MultimediaViewer = null;
+        SyntaxHighlight_GeSHi = null;
         #HTMLets = null; # deprecated
         #FancyBoxThumbs = null; # deprecated replaced with MultimediaViewer
 
