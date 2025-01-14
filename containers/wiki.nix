@@ -35,16 +35,16 @@ in {
         #FancyBoxThumbs = null; # deprecated replaced with MultimediaViewer
 
         CharInsert = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:CharInsert
-          url = "https://extdist.wmflabs.org/dist/extensions/CharInsert-REL1_39-259a0d0.tar.gz";
-          sha256 = "0a7h3i3xi8jyr6dnrzfsjay87m08cz7njfkvvhlipf9p22h18n6n";
+          url = "https://extdist.wmflabs.org/dist/extensions/CharInsert-REL1_43-ee7b179.tar.gz";
+          sha256 = "0immdkdrp23m9z3rqajhd0jwm6x3vx35qh75dfz8255ii0y7imy8";
         };
         RegexFunctions = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:RegexFunctions
-          url = "https://extdist.wmflabs.org/dist/extensions/RegexFunctions-REL1_39-6f818b1.tar.gz";
-          sha256 = "025nnk2pg6zvjhay84frs4bb6csyf5ljn309jk5wp3c67qjdmd4f";
+          url = "https://extdist.wmflabs.org/dist/extensions/RegexFunctions-REL1_43-db5a65a.tar.gz";
+          sha256 = "1f4sj1kwb4q4vc0ax60wil6f8nyii2d36k75mk4yh482ddjripkp";
         };
         Variables = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:Variables
-          url = "https://extdist.wmflabs.org/dist/extensions/Variables-REL1_39-1620bdf.tar.gz";
-          sha256 = "0345f8gz0g3l6s8h37qm191jfh2jzgplwgxh6f51dg0y2ay251hh";
+          url = "https://extdist.wmflabs.org/dist/extensions/Variables-REL1_43-81115fa.tar.gz";
+          sha256 = "1xjrhybg1kybz0lllawr80y6kj58pikm4hng3wn3dmn7mxjbqa9r";
         };
         SimpleBatchUpload = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
           url = "https://github.com/ProfessionalWiki/SimpleBatchUpload/archive/refs/tags/2.0.0.tar.gz";
@@ -55,15 +55,15 @@ in {
           rev = "456959f9e72c09faf2a9e2db37e91adac0ff179a";
           sha256 = "sha256-BjMNES07j25yLq/seqafmeDBL3WX27bGFRntjh4GL6w=";
         };
-        DFDiagram = pkgs.fetchgit {
+/*         DFDiagram = pkgs.fetchgit { # broken 1.43
           url = "https://github.com/MEXAHOTABOP/DFDiagram.git";
           rev = "b7a3a3f42782ed6da5e1f0025abfc710a0fd82a7";
           sha256 = "sha256-zaRE5ObAf0ZmS3J/cIY9x+jvXyhGKf1rj+9uOEyu928=";
           fetchSubmodules = true;
-        };
+        }; */
         Nuke = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:Nuke
-          url = "https://extdist.wmflabs.org/dist/extensions/Nuke-REL1_39-01d32b1.tar.gz";
-          sha256 = "0ff1psc880jzi8nq9szr3f6glz0w8xgi4vnvnlkrmm78pxiw304j";
+          url = "https://extdist.wmflabs.org/dist/extensions/Nuke-REL1_43-712a75b.tar.gz";
+          sha256 = "1g94gxcbvbnbq31mj2iizqgj6nwswc9ngbjqjlaj4164gisz8305";
         };
       };
 

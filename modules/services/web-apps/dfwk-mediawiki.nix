@@ -528,7 +528,7 @@ in
       wantedBy = [ "multi-user.target" ];
       before = [ "phpfpm-dfwk-mediawiki.service" ];
       script = ''
-        ${cfg.php}/bin/php ${pkg}/share/mediawiki/maintenance/update.php --conf ${mediawikiConfig} --quick
+        ${cfg.php}/bin/php ${pkg}/share/mediawiki/maintenance/run.php update --conf ${mediawikiConfig} --quick
       '';
 
       serviceConfig = {
