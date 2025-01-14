@@ -85,6 +85,10 @@ in {
     };
     phpfpm.phpPackage = wiki-php.withExtensions ({ enabled, all }: enabled ++ [ all.apcu ]);
   };
+  environment.systemPackages = with pkgs; [ 
+    python3 # needed for SyntaxHighlight_GeSHi
+  ];
+
 
   system.stateVersion = "22.05";
 }
