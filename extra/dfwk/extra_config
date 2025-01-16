@@ -119,3 +119,5 @@ $wgSimpleBatchUploadMaxFilesPerBatch = [
 	'*' => 0,
 	'bureaucrat' => 1000,
 ];
+
+$wgUseLegacyMediaStyles = true; # required by floatright style 
