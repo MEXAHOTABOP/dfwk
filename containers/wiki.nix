@@ -57,8 +57,8 @@ in {
         };
         DFDiagram = pkgs.fetchgit {
           url = "https://github.com/MEXAHOTABOP/DFDiagram.git";
-          rev = "a30827be4de947b13de2d1bca75e8619ae8e10a5";
-          sha256 = "sha256-S89632fId77n7B1ZW3RmAlERHmwYds2utBMqebl917Q=";
+          rev = "d3de1a7af4c69d71570327259d622a3e298fa4e4";
+          sha256 = "sha256-Hr83mCJjeFG5Wu47V1b2utip0Yh9Ck+HERQ11TqQNwg=";
           fetchSubmodules = true;
         };
         Nuke = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:Nuke
