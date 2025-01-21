@@ -55,12 +55,12 @@ in {
           rev = "456959f9e72c09faf2a9e2db37e91adac0ff179a";
           sha256 = "sha256-BjMNES07j25yLq/seqafmeDBL3WX27bGFRntjh4GL6w=";
         };
-/*         DFDiagram = pkgs.fetchgit { # broken 1.43
+        DFDiagram = pkgs.fetchgit {
           url = "https://github.com/MEXAHOTABOP/DFDiagram.git";
-          rev = "b7a3a3f42782ed6da5e1f0025abfc710a0fd82a7";
-          sha256 = "sha256-zaRE5ObAf0ZmS3J/cIY9x+jvXyhGKf1rj+9uOEyu928=";
+          rev = "a30827be4de947b13de2d1bca75e8619ae8e10a5";
+          sha256 = "sha256-S89632fId77n7B1ZW3RmAlERHmwYds2utBMqebl917Q=";
           fetchSubmodules = true;
-        }; */
+        };
         Nuke = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:Nuke
           url = "https://extdist.wmflabs.org/dist/extensions/Nuke-REL1_43-712a75b.tar.gz";
           sha256 = "1g94gxcbvbnbq31mj2iizqgj6nwswc9ngbjqjlaj4164gisz8305";
