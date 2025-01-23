@@ -65,6 +65,10 @@ in {
           url = "https://extdist.wmflabs.org/dist/extensions/Nuke-REL1_43-712a75b.tar.gz";
           sha256 = "1g94gxcbvbnbq31mj2iizqgj6nwswc9ngbjqjlaj4164gisz8305";
         };
+        CodeMirror = pkgs.fetchzip { # https://www.mediawiki.org/wiki/Extension:CodeMirror
+          url = "https://extdist.wmflabs.org/dist/extensions/CodeMirror-REL1_43-3f5813c.tar.gz";
+          sha256 = "096xaz9k5bywvyfq8nv2gv6wjbxhywjx7f3g361hr120i846lxql";
+        };
       };
 
       database = {
