@@ -45,7 +45,9 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "no";
+      settings = {
+        PermitRootLogin = "no";
+      };
       ports = [ 3122 ];
     };
 
@@ -77,39 +79,12 @@
         resolver local=on ipv6=off;
         include ${pkgs.cs-openresty-bouncer}/openresty/crowdsec_openresty.conf;
       '';
-      virtualHosts."dfwk.ru" = {
-        serverAliases = [ "www.dfwk.ru" ];
-        enableACME = true;
-        forceSSL = true;
-
-        locations."= /favicon.ico" = {
-          root = "/sites/dfwk.ru/favicon/";
-          tryFiles = "/favicon.ico =404";
-          extraConfig = "expires 60d;";
-        };
-        locations."/" = {
-          proxyPass = "http://192.168.250.2:80";
-        };
-      };
-
-      virtualHosts."chuck.dfwk.ru" = {
-        enableACME = true;
-        forceSSL = true;
-
-        locations."= /favicon.ico" = {
-          root = "/sites/dfwk.ru/favicon/";
-          tryFiles = "/favicon.ico =404";
-          extraConfig = "expires 60d;";
-        };
-        locations."/" = {
-          proxyPass = "http://192.168.250.3:80";
-        };
-      };
-
-      virtualHosts."forum.dfwk.ru" = {
+      virtualHosts = {
+      "dfwk.ru" = {
+          serverAliases = [ "www.dfwk.ru" ];
           enableACME = true;
           forceSSL = true;
-          default = true;
+          default = true; 
 
           locations."= /favicon.ico" = {
             root = "/sites/dfwk.ru/favicon/";
@@ -117,8 +92,37 @@
             extraConfig = "expires 60d;";
           };
           locations."/" = {
-            proxyPass = "http://192.168.250.4:80";
+            proxyPass = "http://192.168.250.2:80";
           };
+        };
+
+        "chuck.dfwk.ru" = {
+          enableACME = true;
+          forceSSL = true;
+
+          locations."= /favicon.ico" = {
+            root = "/sites/dfwk.ru/favicon/";
+            tryFiles = "/favicon.ico =404";
+            extraConfig = "expires 60d;";
+          };
+          locations."/" = {
+            proxyPass = "http://192.168.250.3:80";
+          };
+        };
+
+        "forum.dfwk.ru" = {
+            enableACME = true;
+            forceSSL = true;
+
+            locations."= /favicon.ico" = {
+              root = "/sites/dfwk.ru/favicon/";
+              tryFiles = "/favicon.ico =404";
+              extraConfig = "expires 60d;";
+            };
+            locations."/" = {
+              proxyPass = "http://192.168.250.4:80";
+            };
+        };
       };
     };
 
@@ -147,55 +151,60 @@
     };
   };
 
-  containers.wiki = {
-    config = import ./containers/wiki.nix { inherit system lib pkgs config; };  # pkgs is overrided inside container function so php overlay arent passed to pkgs, so evalute module before passing in config
-    autoStart = true;
-    ephemeral = true;
-    bindMounts = {
-      "/images" = { hostPath = "/sites/dfwk.ru/images"; isReadOnly = false; };
-      "/secrets" = { hostPath = "/sites/dfwk.ru/secrets"; };
+  containers = {
+    wiki = {
+      config = import ./containers/wiki.nix { inherit system lib pkgs config; };  # pkgs is overrided inside container function so php overlay arent passed to pkgs, so evalute module before passing in config
+      autoStart = true;
+      ephemeral = true;
+      bindMounts = {
+        "/images" = { hostPath = "/sites/dfwk.ru/images"; isReadOnly = false; };
+        "/secrets" = { hostPath = "/sites/dfwk.ru/secrets"; };
+      };
+
+
+      privateNetwork = true;
+      hostAddress = "192.168.250.1";
+      localAddress = "192.168.250.2";
     };
 
+    chuck = {
+      config = import ./containers/chuck.nix { inherit system pkgs config; }; 
+      autoStart = true;
+      ephemeral = true;
+      bindMounts = {
+        "/site" = { hostPath = "/sites/chuck.dfwk.ru"; isReadOnly = false; };  # too many dynamic content inside site folder to keep site in store, engine no longer supported since 2013
+      };
 
-    privateNetwork = true;
-    hostAddress = "192.168.250.1";
-    localAddress = "192.168.250.2";
-  };
-
-  containers.chuck = {
-    config = import ./containers/chuck.nix { inherit system pkgs config; }; 
-    autoStart = true;
-    ephemeral = true;
-    bindMounts = {
-      "/site" = { hostPath = "/sites/chuck.dfwk.ru"; isReadOnly = false; };  # too many dynamic content inside site folder to keep site in store, engine no longer supported since 2013
+      privateNetwork = true;
+      hostAddress = "192.168.250.1";
+      localAddress = "192.168.250.3";
     };
 
-    privateNetwork = true;
-    hostAddress = "192.168.250.1";
-    localAddress = "192.168.250.3";
-  };
+    forum = {
+      config = import ./containers/forum.nix { inherit system pkgs config; };
+      autoStart = true;
+      ephemeral = true;
+      bindMounts = {
+        "/site" = { hostPath = "/sites/forum.dfwk.ru"; isReadOnly = false; };  # failed to solve plugin installation process in reasanoble timeframe may be return to this later
+      };
 
-  containers.forum = {
-    config = import ./containers/forum.nix { inherit system pkgs config; };
-    autoStart = true;
-    ephemeral = true;
-    bindMounts = {
-      "/site" = { hostPath = "/sites/forum.dfwk.ru"; isReadOnly = false; };  # failed to solve plugin installation process in reasanoble timeframe may be return to this later
+      privateNetwork = true;
+      hostAddress = "192.168.250.1";
+      localAddress = "192.168.250.4";
     };
 
-    privateNetwork = true;
-    hostAddress = "192.168.250.1";
-    localAddress = "192.168.250.4";
   };
 
   nix = {
     extraOptions = "experimental-features = nix-command flakes";
     gc.automatic = true;
     gc.options = "--delete-older-than 14d";
-    trustedUsers = [
-      "root"
-      "deploy"
-     ];
+    settings = { 
+      trusted-users = [
+        "root"
+        "deploy"
+      ];
+    };
   };
 
   environment.systemPackages = with pkgs; [ 
