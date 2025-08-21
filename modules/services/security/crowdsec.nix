@@ -150,7 +150,7 @@ in {
           serviceConfig = {
             Type = "oneshot";
             ExecStart = "${sudo_doas} -u crowdsec ${cscli}/bin/cscli --error hub upgrade";
-            ExecStartPost = " systemctl restart crowdsec.service";
+            ExecStartPost = "systemctl restart crowdsec.service";
           };
         };
 
