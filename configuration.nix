@@ -11,6 +11,7 @@
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     firewall.allowedTCPPorts = [ 25 80 443 3122 3306 ];
+    dhcpcd.enable = false;
   };
 
   users.users.deploy = {
