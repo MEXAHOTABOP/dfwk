@@ -1,6 +1,5 @@
 { system, config, pkgs, lib, ... }:
 {
-  imports = [ ./modules/services/security/crowdsec.nix ];
   boot = {
     isContainer = true;
     loader.initScript.enable = true;
@@ -61,10 +60,12 @@
     postfix = {
       enable = true;
       enableSubmission = true;
-      hostname = "dfwk.ru";
-      domain = "dfwk.ru";
-      relayDomains = [ "dfwk.ru" ];
-      networks = [ "192.168.250.2/32" "192.168.250.4/32" ];
+      settings.main = {
+        myhostname = "dfwk.ru";
+        mydomain = "dfwk.ru";
+        relay_domains = [ "dfwk.ru" ];
+        mynetworks = [ "192.168.250.2/32" "192.168.250.4/32" ];
+      };
     };
 
     nginx = {
@@ -134,13 +135,83 @@
 
     crowdsec = {
       enable = true;
+      autoUpdateService = true;
       name = "dfwk.ru";
-      enrollKeyFile = "/sites/crowdsec_secret";
-      package = pkgs.crowdsec.overrideAttrs (finalAttrs: previousAttrs: {
-        postInstall = previousAttrs.postInstall + ''
-          rm -rf $out/lib
-        ''; # unused systemd unit
-      });
+      extraGroups = [ "nginx" ];
+      readOnlyPaths =[
+        "/var/log/nginx/"
+      ];
+
+      settings = {
+        acquisitions = [
+          {
+            source = "file";
+            filenames = [
+              "/var/log/nginx/*.log"
+            ];
+            labels = {  
+              type = "nginx";
+            };
+          }
+        ];
+
+        parsers = {
+          s02Enrich = [
+            {
+              name = "chuck404BSWhitelist";
+              description = "fix problem with false positives in chuck";
+              whitelist = {
+                reason = "ignore thumbnails";
+                expression = [
+                  "evt.Parsed.request contains '/df/thumb'"
+                  "evt.Parsed.request contains '/hh/thumb'"
+                  "evt.Parsed.request contains '/rl/thumb'"
+                ];
+              };
+            }
+          ];
+        };
+
+        profiles = [
+          {
+            name = "default_ip_remediation";
+            filters = [
+              "Alert.Remediation == true && Alert.GetScope() == 'Ip'"
+            ];
+            decisions = [
+              {
+                type = "captcha";
+                duration = "4h";
+              }
+            ];
+            on_success = "break";
+          }
+          {
+            name = "default_range_remediation";
+            filters = [
+              "Alert.Remediation == true && Alert.GetScope() == 'Range'"
+            ];
+            decisions = [
+              {
+                type = "captcha";
+                duration = "8h";
+              }
+            ];
+            on_success = "break";
+          }
+        ];
+
+        console.enrollKeyFile = "/sites/crowdsec_secret";
+        config.api.server.online_client.credentials_path = "${config.services.crowdsec.settings.config.config_paths.data_dir}/online_api_credentials.yaml";
+      };
+
+      hub = {
+        collections = [
+          "crowdsecurity/linux"
+          "crowdsecurity/nginx"
+        ];
+      };
+      
     };
   };
 

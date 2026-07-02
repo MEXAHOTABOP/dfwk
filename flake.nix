@@ -1,11 +1,14 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-26.05";
     deploy-rs.url = "github:serokell/deploy-rs";
     legacy-php.url = "github:fossar/nix-phps";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+
+    # https://github.com/NixOS/nixpkgs/pull/535319 
+    nixpkgs-crowdsec.url = "github:TornaxO7/nixpkgs/saltsprint";
   };
-  outputs = { self, nixpkgs, legacy-php, deploy-rs, nixpkgs-unstable}:
+  outputs = { self, nixpkgs, legacy-php, deploy-rs, nixpkgs-unstable, nixpkgs-crowdsec }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -13,7 +16,7 @@
       overlays = [ 
         legacy-php.overlays.default
         (final: prev:{
-          crowdsec = nixpkgs-unstable.legacyPackages.${system}.crowdsec;
+          crowdsec = nixpkgs-crowdsec.legacyPackages.${system}.crowdsec;
           cs-openresty-bouncer = prev.callPackage ./pkgs/cs-openresty-bouncer { };
           openresty = prev.openresty.overrideAttrs (finalAttrs: previousAttrs: {
             postInstall = previousAttrs.postInstall + ''
@@ -29,7 +32,17 @@
     dfwkSystem = nixpkgs.lib.nixosSystem {
       inherit system;
       inherit pkgs;
-      modules = [ ./configuration.nix ];
+      modules = [ 
+        ({ ... }: {# https://github.com/NixOS/nixpkgs/pull/535319
+          disabledModules = [
+            "services/security/crowdsec.nix"
+          ];
+          imports = [ 
+            "${nixpkgs-crowdsec}/nixos/modules/services/security/crowdsec.nix"
+          ];
+        })
+        ./configuration.nix
+      ];
     };
 
     devShells.${system}.default = with nixpkgs.legacyPackages.${system}; mkShell {
