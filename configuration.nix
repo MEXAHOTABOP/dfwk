@@ -181,7 +181,7 @@
             decisions = [
               {
                 type = "captcha";
-                duration = "4h";
+                duration = "2h";
               }
             ];
             on_success = "break";
@@ -194,7 +194,7 @@
             decisions = [
               {
                 type = "captcha";
-                duration = "8h";
+                duration = "4h";
               }
             ];
             on_success = "break";
@@ -209,6 +209,10 @@
         collections = [
           "crowdsecurity/linux"
           "crowdsecurity/nginx"
+          "crowdsecurity/http-dos"
+        ];
+        scenarios = [
+          "crowdsecurity/http-crawl-non_statics"
         ];
       };
       
