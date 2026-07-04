@@ -213,6 +213,7 @@
         ];
         scenarios = [
           "crowdsecurity/http-crawl-non_statics"
+          "crowdsecurity/ban-defcon-drop_range"
         ];
       };
       
