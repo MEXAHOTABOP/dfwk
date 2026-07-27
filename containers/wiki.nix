@@ -69,6 +69,11 @@ in {
           url = "https://extdist.wmflabs.org/dist/extensions/CodeMirror-REL1_43-0096f3b.tar.gz";
           sha256 = "0ii7rma4zy1yfjbyi7pgvqnafz2iglc26khzdxy03lvw8qv5i79y";
         };
+        CrawlerProtection = pkgs.fetchgit { # https://www.mediawiki.org/wiki/Extension:CrawlerProtection
+          url = "https://github.com/mywikis/CrawlerProtection.git";
+          rev = "703b6abbf76db5b7f6d4da6305f5e50a363d8118";
+          sha256 = "sha256-4lyGfS4YY+fkfDuiYfKSI5perbTz1h1wqifpoUZKs5Y=";
+        };
       };
 
       database = {
