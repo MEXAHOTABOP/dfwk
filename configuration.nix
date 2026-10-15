@@ -22,6 +22,14 @@
     ];
   };
 
+  # uid must match the container's dfst user (modules/services/web-apps/dfst.nix)
+  users.groups.dfst = { };
+  users.users.dfst = {
+    uid = 1011;
+    group = "dfst";
+    isSystemUser = true;
+  };
+
   security = {
     sudo = {
       enable = true;
@@ -49,6 +57,12 @@
       };
       ports = [ 3122 ];
     };
+    
+    postgresql = {
+      enable = true;
+      ensureUsers = [ { name = "dfst"; ensureDBOwnership = true; } ];
+      ensureDatabases = [ "dfst" ];
+    };
 
     mysql = {
       enable = true;
@@ -64,7 +78,8 @@
         myhostname = "dfwk.ru";
         mydomain = "dfwk.ru";
         relay_domains = [ "dfwk.ru" ];
-        mynetworks = [ "192.168.250.2/32" "192.168.250.4/32" ];
+        # list: append new container IPs, never concat a string
+        mynetworks = [ "192.168.250.2/32" "192.168.250.4/32" "192.168.250.5/32" ];
       };
     };
 
@@ -81,7 +96,7 @@
         include ${pkgs.cs-openresty-bouncer}/openresty/crowdsec_openresty.conf;
       '';
       virtualHosts = {
-      "dfwk.ru" = {
+        "dfwk.ru" = {
           serverAliases = [ "www.dfwk.ru" ];
           enableACME = true;
           forceSSL = true;
@@ -112,17 +127,65 @@
         };
 
         "forum.dfwk.ru" = {
-            enableACME = true;
-            forceSSL = true;
+          enableACME = true;
+          forceSSL = true;
 
-            locations."= /favicon.ico" = {
-              root = "/sites/dfwk.ru/favicon/";
-              tryFiles = "/favicon.ico =404";
-              extraConfig = "expires 60d;";
-            };
-            locations."/" = {
-              proxyPass = "http://192.168.250.4:80";
-            };
+          locations."= /favicon.ico" = {
+            root = "/sites/dfwk.ru/favicon/";
+            tryFiles = "/favicon.ico =404";
+            extraConfig = "expires 60d;";
+          };
+          locations."/" = {
+            proxyPass = "http://192.168.250.4:80";
+          };
+        };
+
+        "dfst.w1l.ru" = {
+          enableACME = true;
+          forceSSL = true;
+
+          locations."= /favicon.ico" = {
+            root = "${pkgs.dfst}/public/images/";
+            tryFiles = "/favicon.ico =404";
+            extraConfig = "expires 60d;";
+          };
+
+          locations."/images/stories/" = {
+            alias = "/sites/dfst/files/images/stories/";
+          };
+
+          locations."/" = {
+            root = "${pkgs.dfst}/public";
+            tryFiles = "$uri @puma";
+          };
+
+          locations."@puma" = {
+            proxyPass = "http://192.168.250.5:3000";
+          };
+        };
+
+        "dfst.ru" = {
+          enableACME = false;
+          forceSSL = false;
+
+          locations."= /favicon.ico" = {
+            root = "${pkgs.dfst}/public/images/";
+            tryFiles = "/favicon.ico =404";
+            extraConfig = "expires 60d;";
+          };
+
+          locations."/images/stories/" = {
+            alias = "/sites/dfst/files/images/stories/";
+          };
+
+          locations."/" = {
+            root = "${pkgs.dfst}/public";
+            tryFiles = "$uri @puma";
+          };
+
+          locations."@puma" = {
+            proxyPass = "http://192.168.250.5:3000";
+          };
         };
       };
     };
@@ -131,6 +194,12 @@
       enable = true;
       databases = [ "dfwk" "chuck" "forum" ];
       location = "/sites/mysql_backup";
+    };
+
+    postgresqlBackup = {
+      enable = true;
+      databases = [ "dfst" ];
+      location = "/sites/postgre_backup";
     };
 
     crowdsec = {
@@ -262,6 +331,26 @@
       localAddress = "192.168.250.4";
     };
 
+    dfst = {
+      config = import ./containers/dfst.nix { inherit system pkgs; };
+      autoStart = true;
+      ephemeral = true;
+      bindMounts = {
+        "/site"           = { hostPath = "/sites/dfst/files"; isReadOnly = false; };
+        "/run/postgresql" = { hostPath = "/run/postgresql"; };
+        "/secrets"        = { hostPath = "/sites/dfst/secrets"; };
+      };
+
+      privateNetwork = true;
+      hostAddress  = "192.168.250.1";
+      localAddress = "192.168.250.5";
+    };
+
+  };
+
+  systemd.services."container@dfst" = {
+    after = [ "postgresql.service" ];
+    requires = [ "postgresql.service" ];
   };
 
   nix = {

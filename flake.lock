@@ -20,6 +20,27 @@
         "type": "github"
       }
     },
+    "dfst": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791656860,
+        "narHash": "sha256-pLyMlPZuH+gHouUxObqnMh66Z7l7g9cDKp8fj4vMKJc=",
+        "ref": "master",
+        "rev": "93dea54cc0af593e154c79cdf7ee14689e89bb8b",
+        "revCount": 188,
+        "type": "git",
+        "url": "ssh://gitea@h.w1l.ru/MEXAHOTABOP/dfst.git"
+      },
+      "original": {
+        "ref": "master",
+        "type": "git",
+        "url": "ssh://gitea@h.w1l.ru/MEXAHOTABOP/dfst.git"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -151,6 +172,7 @@
     "root": {
       "inputs": {
         "deploy-rs": "deploy-rs",
+        "dfst": "dfst",
         "legacy-php": "legacy-php",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-crowdsec": "nixpkgs-crowdsec",
