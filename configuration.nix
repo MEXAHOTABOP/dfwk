@@ -110,6 +110,11 @@
           locations."/" = {
             proxyPass = "http://192.168.250.2:80";
           };
+          extraConfig = ''
+            if ($http_content_type ~* "multipart") {
+                return 403;
+            }
+          '';
         };
 
         "chuck.dfwk.ru" = {
@@ -124,6 +129,11 @@
           locations."/" = {
             proxyPass = "http://192.168.250.3:80";
           };
+          extraConfig = ''
+            if ($http_content_type ~* "multipart") {
+                return 403;
+            }
+          '';
         };
 
         "forum.dfwk.ru" = {
@@ -138,6 +148,11 @@
           locations."/" = {
             proxyPass = "http://192.168.250.4:80";
           };
+          extraConfig = ''
+            if ($http_content_type ~* "multipart") {
+                return 403;
+            }
+          '';
         };
 
         "dfst.w1l.ru" = {

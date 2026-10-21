@@ -92,7 +92,12 @@ in {
       extraConfig = (builtins.readFile ../extra/dfwk/extra_config);
 
     };
-    phpfpm.phpPackage = wiki-php.withExtensions ({ enabled, all }: enabled ++ [ all.apcu ]);
+    phpfpm = {
+      phpPackage = wiki-php.withExtensions ({ enabled, all }: enabled ++ [ all.apcu ]);
+      phpOptions = ''
+        session.upload_progress.enabled = Off
+      '';
+    };
   };
   environment.systemPackages = with pkgs; [ 
     python3 # needed for SyntaxHighlight_GeSHi

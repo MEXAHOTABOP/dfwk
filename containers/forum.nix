@@ -19,6 +19,9 @@ in {
         "pm.max_spare_servers" = 4;
         "pm.max_requests" = 500;
       };
+      phpOptions = ''
+        session.upload_progress.enabled = Off
+      '';
     };
 
     httpd = {
