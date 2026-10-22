@@ -110,11 +110,6 @@
           locations."/" = {
             proxyPass = "http://192.168.250.2:80";
           };
-          extraConfig = ''
-            if ($http_content_type ~* "multipart") {
-                return 403;
-            }
-          '';
         };
 
         "chuck.dfwk.ru" = {

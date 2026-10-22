@@ -94,9 +94,6 @@ in {
     };
     phpfpm = {
       phpPackage = wiki-php.withExtensions ({ enabled, all }: enabled ++ [ all.apcu ]);
-      phpOptions = ''
-        session.upload_progress.enabled = Off
-      '';
     };
   };
   environment.systemPackages = with pkgs; [ 
