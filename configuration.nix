@@ -232,6 +232,16 @@
               type = "nginx";
             };
           }
+          {
+            appsec_configs = [
+              "crowdsecurity/appsec-default"
+            ];
+            labels = {
+              type = "appsec";
+            };
+            listen_addr = "127.0.0.1:7422";
+            source = "appsec";
+          }
         ];
 
         parsers = {
@@ -289,10 +299,18 @@
           "crowdsecurity/linux"
           "crowdsecurity/nginx"
           "crowdsecurity/http-dos"
+          "crowdsecurity/appsec-virtual-patching"
+          "crowdsecurity/appsec-generic-rules"
         ];
         scenarios = [
           "crowdsecurity/http-crawl-non_statics"
           "crowdsecurity/ban-defcon-drop_range"
+        ];
+        appsec-configs = [
+          "crowdsecurity/appsec-default"
+        ];
+        appsec-rules = [
+          "crowdsecurity/base-config"
         ];
       };
       
