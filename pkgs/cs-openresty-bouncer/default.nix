@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   pname = "cs-openresty-bouncer";
-  version = "1.1.3";
+  version = "1.2.3";
 
   src = fetchurl {
     url = "https://github.com/crowdsecurity/cs-openresty-bouncer/releases/download/v${version}/crowdsec-openresty-bouncer.tgz";
-    sha256 = "0hkp91jjhq41ddxbyqnp2dnpqxpws5h8d77c2q7ga8x3xk4r8n38"; 
+    sha256 = "1gx02ih6vqrbpslpf9m5b8zlklb0v76abjf1a2sangvb2vmwwg9a"; 
   };
 
   prePatch = ''
