@@ -308,6 +308,8 @@
         ];
         appsec-configs = [
           "crowdsecurity/appsec-default"
+          "crowdsecurity/appsec-bot-challenge-exclude-search-engines"
+          "crowdsecurity/appsec-bot-challenge-exclude-crawler-files"
         ];
         appsec-rules = [
           "crowdsecurity/base-config"
