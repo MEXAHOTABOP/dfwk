@@ -5,15 +5,12 @@
     legacy-php.url = "github:fossar/nix-phps";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
-    # https://github.com/NixOS/nixpkgs/pull/535319 
-    nixpkgs-crowdsec.url = "github:TornaxO7/nixpkgs/saltsprint";
-
     dfst = { # currently not public
       url = "git+ssh://gitea@h.w1l.ru/MEXAHOTABOP/dfst.git?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, legacy-php, deploy-rs, nixpkgs-unstable, nixpkgs-crowdsec, dfst }:
+  outputs = { self, nixpkgs, legacy-php, deploy-rs, nixpkgs-unstable, dfst }:
   let
     system = "x86_64-linux";
     dfstPkg = dfst.packages.${system}.dfst;
@@ -22,7 +19,7 @@
       overlays = [ 
         legacy-php.overlays.default
         (final: prev:{
-          crowdsec = nixpkgs-crowdsec.legacyPackages.${system}.crowdsec;
+          crowdsec = nixpkgs-unstable.legacyPackages.${system}.crowdsec;
           cs-openresty-bouncer = prev.callPackage ./pkgs/cs-openresty-bouncer { };
           dfst = dfstPkg;
           openresty = prev.openresty.overrideAttrs (finalAttrs: previousAttrs: {
@@ -40,12 +37,12 @@
       inherit system;
       inherit pkgs;
       modules = [ 
-        ({ ... }: {# https://github.com/NixOS/nixpkgs/pull/535319
+        ({ ... }: { # new version already in unstable
           disabledModules = [
             "services/security/crowdsec.nix"
           ];
           imports = [ 
-            "${nixpkgs-crowdsec}/nixos/modules/services/security/crowdsec.nix"
+            "${nixpkgs-unstable}/nixos/modules/services/security/crowdsec/default.nix"
           ];
         })
         ./configuration.nix

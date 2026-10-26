@@ -108,29 +108,13 @@
         "type": "github"
       }
     },
-    "nixpkgs-crowdsec": {
-      "locked": {
-        "lastModified": 1782976172,
-        "narHash": "sha256-+Sk4XRytasMKJj+fICF0ltUIr4HW5Ezq9Pg2bktCWzo=",
-        "owner": "TornaxO7",
-        "repo": "nixpkgs",
-        "rev": "09000fdbccf06b47705e95935b289d3e98680623",
-        "type": "github"
-      },
-      "original": {
-        "owner": "TornaxO7",
-        "ref": "saltsprint",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1782723713,
-        "narHash": "sha256-T6OhkwGyyGHer1lr4GkbOp//7ii23xLE7HuMmjrdkXI=",
-        "rev": "b5aa0fbd538984f6e3d201be0005b4463d8b09f8",
+        "lastModified": 1792773339,
+        "narHash": "sha256-17eNBI5Khe4JZaRkL5hRGPWf8MZ6qv+bWAr4V8YeKBw=",
+        "rev": "3ec636362e1816bc2f0888fa0fa2c69f1bc9e504",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1024265.b5aa0fbd5389/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1100280.3ec636362e18/nixexprs.tar.zst"
       },
       "original": {
         "id": "nixpkgs",
@@ -156,11 +140,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1792615934,
-        "narHash": "sha256-q1ku4ygV7tdmv5Q9QYwhVDsNMZRJcRYjVczoX5+XWBo=",
-        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
+        "lastModified": 1792898606,
+        "narHash": "sha256-v+CWvNPgAsxoqWDWmkjhh3qwZiE/oGkhXT+QH79yg2o=",
+        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.12400.da6dc0e7b260/nixexprs.tar.zst"
+        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.12658.1f607aa79b63/nixexprs.tar.zst"
       },
       "original": {
         "id": "nixpkgs",
@@ -174,7 +158,6 @@
         "dfst": "dfst",
         "legacy-php": "legacy-php",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-crowdsec": "nixpkgs-crowdsec",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
