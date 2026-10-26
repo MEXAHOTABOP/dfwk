@@ -121,3 +121,8 @@ $wgSimpleBatchUploadMaxFilesPerBatch = [
 ];
 
 $wgUseLegacyMediaStyles = true; # required by floatright style 
+
+$wgUseCdn = true;
+$wgCdnMaxAge = 300;
+$wgCdnServers = [ '192.168.250.1:1080' ];
+$wgInternalServer = 'http://dfwk.ru';

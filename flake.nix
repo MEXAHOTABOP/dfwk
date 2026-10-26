@@ -22,7 +22,9 @@
           crowdsec = nixpkgs-unstable.legacyPackages.${system}.crowdsec;
           cs-openresty-bouncer = prev.callPackage ./pkgs/cs-openresty-bouncer { };
           dfst = dfstPkg;
-          openresty = prev.openresty.overrideAttrs (finalAttrs: previousAttrs: {
+          openresty = (prev.openresty.override {
+            modules = [ nixpkgs-unstable.legacyPackages.${system}.nginxModules.cache-purge ];
+          }).overrideAttrs (finalAttrs: previousAttrs: {
             postInstall = previousAttrs.postInstall + ''
               cp -r ${final.luaPackages.lua-resty-http}/share/lua/5.2/* $out/lualib/
               cp -r ${final.luaPackages.lua-resty-openssl}/share/lua/5.2/* $out/lualib/

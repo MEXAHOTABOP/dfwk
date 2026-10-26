@@ -10,6 +10,7 @@
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     firewall.allowedTCPPorts = [ 25 80 443 3122 3306 ];
+    firewall.interfaces."ve-wiki".allowedTCPPorts = [ 1080 ];
   };
 
   users.users.deploy = {
@@ -91,9 +92,40 @@
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
+
+      proxyCachePath.pagecache = {
+        enable = true;
+        keysZoneName = "pagecache";
+        keysZoneSize = "32m";
+        levels = "1:2";
+        useTempPath = false;
+        inactive = "2d";
+        maxSize = "1g";
+      };
+
       commonHttpConfig = ''
         resolver local=on ipv6=off;
         include ${pkgs.cs-openresty-bouncer}/openresty/crowdsec_openresty.conf;
+
+        map $http_cookie        $pagecache_has_cookie { ""      0; default 1; }
+        map $is_args            $pagecache_has_args   { ""      0; default 1; }
+        map $http_authorization $pagecache_has_auth   { ""      0; default 1; }
+        map $uri                $pagecache_bad_uri {
+          default 0;
+          "~*(*UTF8)^/(special|служебная):"          1;
+          "~*^/(api|rest|img_auth|thumb|edit)\.php"  1;
+        }
+        # cache only: GET, no cookie, no query string, no auth, not a special/api path
+        map "$pagecache_has_cookie$pagecache_has_args$pagecache_has_auth$pagecache_bad_uri" $pagecache_skip {
+          "0000" 0;
+          default 1;
+        }
+        map $pagecache_skip $pagecache_accept_language {
+          0       "ru";
+          default $http_accept_language;
+        }
+        log_format pagecache '$time_iso8601 $remote_addr $upstream_cache_status $status '
+                        '$request_method $host$request_uri';
       '';
       virtualHosts = {
         "dfwk.ru" = {
@@ -102,13 +134,83 @@
           forceSSL = true;
           default = true; 
 
+          extraConfig = ''
+            add_header X-Cache $upstream_cache_status always;
+            access_log /var/log/nginx-pagecache/pagecache.log pagecache;
+          '';
+
           locations."= /favicon.ico" = {
             root = "/sites/dfwk.ru/favicon/";
             tryFiles = "/favicon.ico =404";
             extraConfig = "expires 60d;";
           };
+
+          # NOTE: MediaWiki never purges /images or /skins|resources|extensions (their
+          # URLs stay the same across re-uploads and across wiki updates). After a
+          # MediaWiki update, and after re-uploading a file, empty the whole zone on
+          # the host:  rm -rf /var/cache/nginx/pagecache/*
+          locations."/images/" = {
+            root = "/sites/dfwk.ru";
+            extraConfig = ''
+              expires 7d;
+              try_files $uri @wiki;
+            '';
+          };
+
+          locations."~ ^/images/(deleted|archive|tmp)/|\\.(ht|git|svn)" = {
+            extraConfig = "return 403;";
+          };
+          locations."~ ^/(skins|resources|extensions)/" = {
+            proxyPass = "http://192.168.250.2:80";
+            extraConfig = ''
+              proxy_cache pagecache;
+              proxy_cache_key "$host$uri$is_args$args";
+              proxy_cache_valid 200 30d;
+              expires 30d;
+            '';
+          };
+          locations."= /load.php" = {
+            proxyPass = "http://192.168.250.2:80";
+            extraConfig = ''
+              proxy_cache pagecache;
+              proxy_cache_key "$host$uri$is_args$args";
+            '';
+          };
+
+          # articles (pretty URLs)
           locations."/" = {
             proxyPass = "http://192.168.250.2:80";
+            extraConfig = ''
+              proxy_cache pagecache;
+              proxy_cache_key "$host$uri$is_args$args";
+              proxy_cache_bypass $pagecache_skip;
+              proxy_no_cache    $pagecache_skip;
+              proxy_cache_lock on;
+              proxy_cache_lock_age 5s;
+              proxy_cache_lock_timeout 10s;
+              proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+              proxy_cache_background_update on;
+              proxy_set_header Accept-Language $pagecache_accept_language;
+            '';
+          };
+
+          locations."@wiki" = { proxyPass = "http://192.168.250.2:80"; };
+        };
+
+        "pagecache-purge" = {
+          serverName = "_";
+          listen = [ { addr = "192.168.250.1"; port = 1080; } ];
+          extraConfig = ''
+            allow 192.168.250.2;
+            deny all;
+            access_log /var/log/nginx-pagecache/purge.log;
+          '';
+          locations."/" = {
+            extraConfig = ''
+              if ($request_method != PURGE) { return 405; }
+              cache_purge_response_type text;
+              proxy_cache_purge pagecache "$host$uri$is_args$args";
+            '';
           };
         };
 
@@ -382,6 +484,9 @@
     after = [ "postgresql.service" ];
     requires = [ "postgresql.service" ];
   };
+
+  systemd.tmpfiles.rules = [ "d /var/log/nginx-pagecache 0750 nginx nginx - -" ];
+  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/log/nginx-pagecache" ];
 
   nix = {
     extraOptions = "experimental-features = nix-command flakes";

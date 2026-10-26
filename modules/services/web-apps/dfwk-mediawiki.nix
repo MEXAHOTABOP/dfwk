@@ -520,8 +520,8 @@ in
       "d '${stateDir}' 0750 ${user} ${group} - -"
       "d '${cacheDir}' 0750 ${user} ${group} - -"
     ] ++ optionals (cfg.uploadsDir != null) [
-      "d '${cfg.uploadsDir}' 0750 ${user} ${group} - -"
-      "Z '${cfg.uploadsDir}' 0750 ${user} ${group} - -"
+      "d '${cfg.uploadsDir}' 0755 ${user} ${group} - -"
+      "Z '${cfg.uploadsDir}' 0755 ${user} ${group} - -"
     ];
 
     systemd.services.mediawiki-init = {
