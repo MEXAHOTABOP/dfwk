@@ -124,8 +124,6 @@
           0       "ru";
           default $http_accept_language;
         }
-        log_format pagecache '$time_iso8601 $remote_addr $upstream_cache_status $status '
-                        '$request_method $host$request_uri';
       '';
       virtualHosts = {
         "dfwk.ru" = {
@@ -136,7 +134,6 @@
 
           extraConfig = ''
             add_header X-Cache $upstream_cache_status always;
-            access_log /var/log/nginx-pagecache/pagecache.log pagecache;
           '';
 
           locations."= /favicon.ico" = {
@@ -203,7 +200,6 @@
           extraConfig = ''
             allow 192.168.250.2;
             deny all;
-            access_log /var/log/nginx-pagecache/purge.log;
           '';
           locations."/" = {
             extraConfig = ''
@@ -484,9 +480,6 @@
     after = [ "postgresql.service" ];
     requires = [ "postgresql.service" ];
   };
-
-  systemd.tmpfiles.rules = [ "d /var/log/nginx-pagecache 0750 nginx nginx - -" ];
-  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/log/nginx-pagecache" ];
 
   nix = {
     extraOptions = "experimental-features = nix-command flakes";
