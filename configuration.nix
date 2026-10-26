@@ -97,10 +97,7 @@
         enable = true;
         keysZoneName = "pagecache";
         keysZoneSize = "32m";
-        levels = "1:2";
-        useTempPath = false;
         inactive = "2d";
-        maxSize = "1g";
       };
 
       commonHttpConfig = ''
@@ -125,8 +122,20 @@
           default $http_accept_language;
         }
       '';
-      virtualHosts = {
-        "dfwk.ru" = {
+      virtualHosts = let
+        pageCacheCommon = key: ''
+          proxy_cache pagecache;
+          proxy_cache_key "${key}";
+          proxy_cache_lock on;
+          proxy_cache_lock_age 5s;
+          proxy_cache_lock_timeout 10s;
+          proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+          proxy_cache_background_update on;
+        '';
+      in {
+        "dfwk.ru" = let
+          pageCacheKey = "wiki$uri$is_args$args";
+        in {
           serverAliases = [ "www.dfwk.ru" ];
           enableACME = true;
           forceSSL = true;
@@ -159,34 +168,22 @@
           };
           locations."~ ^/(skins|resources|extensions)/" = {
             proxyPass = "http://192.168.250.2:80";
-            extraConfig = ''
-              proxy_cache pagecache;
-              proxy_cache_key "$host$uri$is_args$args";
+            extraConfig = pageCacheCommon pageCacheKey + ''
               proxy_cache_valid 200 30d;
               expires 30d;
             '';
           };
           locations."= /load.php" = {
             proxyPass = "http://192.168.250.2:80";
-            extraConfig = ''
-              proxy_cache pagecache;
-              proxy_cache_key "$host$uri$is_args$args";
-            '';
+            extraConfig = pageCacheCommon pageCacheKey;
           };
 
           # articles (pretty URLs)
           locations."/" = {
             proxyPass = "http://192.168.250.2:80";
-            extraConfig = ''
-              proxy_cache pagecache;
-              proxy_cache_key "$host$uri$is_args$args";
+            extraConfig = pageCacheCommon pageCacheKey + ''
               proxy_cache_bypass $pagecache_skip;
               proxy_no_cache    $pagecache_skip;
-              proxy_cache_lock on;
-              proxy_cache_lock_age 5s;
-              proxy_cache_lock_timeout 10s;
-              proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-              proxy_cache_background_update on;
               proxy_set_header Accept-Language $pagecache_accept_language;
             '';
           };
@@ -205,7 +202,7 @@
             extraConfig = ''
               if ($request_method != PURGE) { return 405; }
               cache_purge_response_type text;
-              proxy_cache_purge pagecache "$host$uri$is_args$args";
+              proxy_cache_purge pagecache "wiki$uri$is_args$args";
             '';
           };
         };
